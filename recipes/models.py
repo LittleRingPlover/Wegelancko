@@ -15,6 +15,9 @@ class Owner(models.Model):
     name = models.CharField(max_length=100)
     website = models.URLField(null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Recipe(models.Model):
     """Recipe added by the user."""
@@ -25,6 +28,9 @@ class Recipe(models.Model):
     edition_date = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 
 class Comments(models.Model):
     """Comments of recipes written by users."""
@@ -32,3 +38,6 @@ class Comments(models.Model):
     publication_date = models.DateTimeField(auto_now_add=True)
     edition_date = models.DateTimeField(auto_now=True)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.content
