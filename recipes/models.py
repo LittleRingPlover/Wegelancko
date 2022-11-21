@@ -40,4 +40,4 @@ class Comments(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.content
+        return self.content # jeszcze do zmiany, damy tu usera

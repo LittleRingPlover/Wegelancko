@@ -4,10 +4,17 @@ from recipes.models import Owner, Recipe, Comments
 # Register your models here.
 
 
+class CommentsInline(admin.StackedInline):
+    model = Comments
+
+
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'owner')
     list_filter = ('category', 'owner')
     search_fields = ('title', 'category', 'owner__name')
+    inlines = [
+        CommentsInline,
+    ]
 
 
 class CommentsAdmin(admin.ModelAdmin):
