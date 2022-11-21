@@ -1,10 +1,17 @@
-<!DOCTYPE html>
+{% load bootstrap5 %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Kategorie</title>
 </head>
 <body>
-
+{% for category in categories %}
+<div class="card mb-3 bg-dark text-light text-opacity-75">
+  <h4 class="card-header">
+    <p>{{ category|center:"15" }}</p>
+  </h4>
+</div>
+{% endfor %}
 </body>
 </html>

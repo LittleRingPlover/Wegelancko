@@ -1,15 +1,6 @@
 from django.db import models
 
 
-CATEGORY = (
-    ('breakfast', 'Śniadania'),
-    ('appetizers', 'Przystawki'),
-    ('soups', 'Zupy'),
-    ('main dishes', 'Dania główne'),
-    ('desserts', 'Ciasta i desery'),
-)
-
-
 class Owner(models.Model):
     """Owner of the recipe."""
     name = models.CharField(max_length=100)
@@ -23,10 +14,26 @@ class Recipe(models.Model):
     """Recipe added by the user."""
     title = models.CharField(max_length=200)
     content = models.TextField()
-    category = models.CharField(max_length=50, choices=CATEGORY)
     publication_date = models.DateTimeField(auto_now_add=True)
     edition_date = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
+
+    class Category(models.TextChoices):
+        BREAKFAST = 'BR'
+        APPETIZERS = 'AP'
+        SOUPS = 'SO'
+        MAIN_DISHES = 'MD'
+        DESSERTS = 'DE'
+        CATEGORY = [
+            (BREAKFAST, 'Śniadania'),
+            (APPETIZERS, 'Przystawki'),
+            (SOUPS, 'Zupy'),
+            (MAIN_DISHES, 'Dania główne'),
+            (DESSERTS, 'Ciasta i desery'),
+        ]
+        category = models.CharField(
+            max_length=20,
+            choices=CATEGORY)
 
     def __str__(self):
         return self.title

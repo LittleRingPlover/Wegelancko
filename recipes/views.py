@@ -1,13 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Owner, Recipe, Comments
 
 
 def index(request):
     return render(request, 'recipes/index.html')
 
 
-def categories():
-    return HttpResponse("Tu będą kategorie posiłków.")
+def categories(request):
+    recipes = Recipe.objects.all()
+    categories = recipes.category_set.all()
+    context = {'recipes': recipes}
+    return render(request, 'recipes/categories.html', context)
 
 
 def recipes():
