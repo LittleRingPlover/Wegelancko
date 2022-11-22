@@ -8,14 +8,18 @@
 <body>
 {% block page_header %}
 <div style="text-align:center">
-<h1> Hejka! Poczuj się wegelancko! </h1>
+<h1> Dziś mam ochotę na... </h1>
+    <form class="d-flex p-4" role="search">
+      <input class="form-control me-2" type="search" placeholder="Mniam mniam mniam..." aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Szukaj!</button>
+    </form>
 </div>
 {% endblock page_header %}
 {% block content %}
 <div class="mt-4 p-5 bg-dark text-white rounded" >
     <h2>Kategorie:</h2>
    {% for tag in tags %}
-    <a class="btn btn-info my-2 my-sm-0" href="{% url 'recipes:recipes' tag.id %}" role="button">{{ tag }}</a>
+    <a class="btn btn-lg btn-info my-2 my-sm-0" href="{% url 'recipes:recipes' tag.id %}" role="button">{{ tag }}</a>
    {% endfor %}
 </div>
 {% endblock content %}

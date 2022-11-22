@@ -10,7 +10,7 @@
 <div class="mt-4 p-5 bg-dark text-white rounded" >
     <h2>Przepisy z tagiem: {{tag}}</h2>
    {% for recipe in recipes %}
-    <a class="btn btn-info my-2 my-sm-0" href="{% url 'recipes:recipe' recipe.id %}" role="button">{{ recipe }}</a>
+    <a class="btn btn-lg btn-info my-2 my-sm-0" href="{% url 'recipes:recipe' recipe.id %}" role="button">{{ recipe }}</a>
    {% endfor %}
 </div>
 {% endblock content %}
