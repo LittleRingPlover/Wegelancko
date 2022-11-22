@@ -16,5 +16,7 @@ def show_recipes(request, tag_id):
     return render(request, 'recipes/recipes.html', context)
 
 
-def recipe():
-    return HttpResponse("Tu będzie opis jednego przepisu.")
+def show_recipe(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    context = {'recipe': recipe}
+    return render(request, 'recipes/recipe.html', context)
