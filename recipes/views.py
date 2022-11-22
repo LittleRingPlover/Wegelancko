@@ -18,5 +18,6 @@ def show_recipes(request, tag_id):
 
 def show_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    context = {'recipe': recipe}
+    tag = recipe.tag.all()
+    context = {'recipe': recipe, 'tag': tag}
     return render(request, 'recipes/recipe.html', context)

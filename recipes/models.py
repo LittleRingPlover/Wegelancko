@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Owner(models.Model):
@@ -26,6 +27,7 @@ class Recipe(models.Model):
     edition_date = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
     tag = models.ManyToManyField(Tag)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -37,6 +39,7 @@ class Comments(models.Model):
     publication_date = models.DateTimeField(auto_now_add=True)
     edition_date = models.DateTimeField(auto_now=True)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.content # jeszcze do zmiany, damy tu usera
+        return self.content, self.user

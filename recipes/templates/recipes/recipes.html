@@ -1,13 +1,18 @@
-<!DOCTYPE html>
+{% extends 'recipes/base.html' %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Tag: {{tag}}</title>
 </head>
 <body>
-<h2>Przepisy z tagiem: {{tag}}</h2>
-{% for recipe in recipes %}
-{{recipe}}
-{% endfor %}
+{% block content %}
+<div class="mt-4 p-5 bg-dark text-white rounded" >
+    <h2>Przepisy z tagiem: {{tag}}</h2>
+   {% for recipe in recipes %}
+    <a class="btn btn-info my-2 my-sm-0" href="{% url 'recipes:recipe' recipe.id %}" role="button">{{ recipe }}</a>
+   {% endfor %}
+</div>
+{% endblock content %}
 </body>
 </html>
