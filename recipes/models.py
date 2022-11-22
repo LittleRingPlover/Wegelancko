@@ -10,6 +10,13 @@ class Owner(models.Model):
         return self.name
 
 
+class Tag(models.Model):
+    title = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title
+
+
 class Recipe(models.Model):
     """Recipe added by the user."""
     title = models.CharField(max_length=200)
@@ -17,23 +24,7 @@ class Recipe(models.Model):
     publication_date = models.DateTimeField(auto_now_add=True)
     edition_date = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
-
-    class Category(models.TextChoices):
-        BREAKFAST = 'BR'
-        APPETIZERS = 'AP'
-        SOUPS = 'SO'
-        MAIN_DISHES = 'MD'
-        DESSERTS = 'DE'
-        CATEGORY = [
-            (BREAKFAST, 'Śniadania'),
-            (APPETIZERS, 'Przystawki'),
-            (SOUPS, 'Zupy'),
-            (MAIN_DISHES, 'Dania główne'),
-            (DESSERTS, 'Ciasta i desery'),
-        ]
-        category = models.CharField(
-            max_length=20,
-            choices=CATEGORY)
+    tag = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.title
