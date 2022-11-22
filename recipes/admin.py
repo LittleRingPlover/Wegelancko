@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from recipes.models import Owner, Recipe, Comments
+from recipes.models import Owner, Recipe, Comments, Tag
 # Register your models here.
 
 
@@ -9,9 +9,9 @@ class CommentsInline(admin.StackedInline):
 
 
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('title', 'owner')
+    list_display = ('title', 'owner',)
     list_filter = ('owner',)
-    search_fields = ('title', 'owner__name')
+    search_fields = ('title', 'owner__name',)
     inlines = [
         CommentsInline,
     ]
@@ -34,6 +34,11 @@ class OwnerAdmin(admin.ModelAdmin):
             return ''
 
 
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+
+
 admin.site.register(Owner, OwnerAdmin)
 admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(Comments, CommentsAdmin)
+admin.site.register(Tag, TagAdmin)

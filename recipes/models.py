@@ -11,6 +11,7 @@ class Owner(models.Model):
 
 
 class Tag(models.Model):
+    objects = None
     title = models.CharField(max_length=100)
 
     def __str__(self):

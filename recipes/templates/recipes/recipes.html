@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tag: {{tag}}</title>
 </head>
 <body>
-
+<h2>Przepisy z tagiem: {{tag}}</h2>
+{% for recipe in recipes %}
+{{recipe}}
+{% endfor %}
 </body>
 </html>

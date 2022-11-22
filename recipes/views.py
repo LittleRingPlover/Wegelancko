@@ -1,22 +1,19 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from .models import Owner, Recipe, Comments
+from recipes.models import Owner, Recipe, Comments, Tag
 
 
 def index(request):
-    return render(request, 'recipes/index.html')
+    tags = Tag.objects.filter()
+    context = {'tags': tags}
+    return render(request, 'recipes/index.html', context)
 
 
-def categories(request, category_id):
-    recipes = get_object_or_404(Recipe, category_id)
-    for r in recipes:
-        category = r.category
-    context = {'recipes': recipes, 'category': category}
-    return render(request, 'recipes/categories.html', context)
-
-
-def recipes():
-    return HttpResponse("Tu będą przepisy należące do danej kategorii.")
+def show_recipes(request, tag_id):
+    tag = get_object_or_404(Tag, id=tag_id)
+    recipes = tag.recipe_set.all()
+    context = {'tag': tag, 'recipes': recipes, }
+    return render(request, 'recipes/recipes.html', context)
 
 
 def recipe():
