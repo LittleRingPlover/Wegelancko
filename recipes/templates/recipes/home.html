@@ -1,0 +1,25 @@
+{% extends 'recipes/base.html' %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wegelancko</title>
+</head>
+<body>
+{% block page_header %}
+<div class="mt-4 p-5 bg-dark text-white rounded">
+      <h1 class="display-3">Witaj, {{ user.username }}!</h1>
+      <a class="btn btn-lg btn-info" href="{% url 'recipes:add_recipe' %}" role="button">Dodaj przepis &raquo;</a>
+      <a class="btn btn-lg btn-info" href="{% url 'recipes:index' %}" role="button">Eksploruj &raquo;</a>
+    </div>
+{% endblock page_header %}
+{% block content %}
+<div class="mt-4 p-5 bg-dark text-white rounded" >
+    <h2>Kategorie:</h2>
+   {% for tag in tags %}
+    <a class="btn btn-lg btn-info my-2 my-sm-0" href="{% url 'recipes:recipes' tag.id %}" role="button">{{ tag }}</a>
+   {% endfor %}
+</div>
+{% endblock content %}
+</body>
+</html>

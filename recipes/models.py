@@ -34,7 +34,7 @@ class Recipe(models.Model):
 
 
 class Comments(models.Model):
-    """Comments of recipes written by users."""
+    """Comments of recipes written by registration."""
     content = models.TextField()
     publication_date = models.DateTimeField(auto_now_add=True)
     edition_date = models.DateTimeField(auto_now=True)
@@ -42,4 +42,4 @@ class Comments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.content, self.user
+        return f"{self.content} - {self.user}"

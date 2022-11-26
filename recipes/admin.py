@@ -9,18 +9,18 @@ class CommentsInline(admin.StackedInline):
 
 
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('title', 'owner',)
-    list_filter = ('owner',)
-    search_fields = ('title', 'owner__name',)
+    list_display = ('title', 'owner', 'user')
+    list_filter = ('owner', 'user')
+    search_fields = ('title', 'owner__name', 'user')
     inlines = [
         CommentsInline,
     ]
 
 
 class CommentsAdmin(admin.ModelAdmin):
-    list_display = ('content', 'publication_date', 'recipe')
-    list_filter = ('publication_date', 'recipe')
-    search_fields = ('content', 'publication_date', 'recipe')
+    list_display = ('user', 'content', 'publication_date', 'recipe')
+    list_filter = ('user', 'publication_date', 'recipe')
+    search_fields = ('user', 'content', 'publication_date', 'recipe')
 
 
 class OwnerAdmin(admin.ModelAdmin):

@@ -7,12 +7,24 @@
 </head>
 <body>
 {% block page_header %}
-<div style="text-align:center">
-<h1> Dziś mam ochotę na... </h1>
-    <form class="d-flex p-4" role="search">
-      <input class="form-control me-2" type="search" placeholder="Mniam mniam mniam..." aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Szukaj!</button>
-    </form>
+<div class="mt-4 p-5 bg-dark text-white rounded" style="text-align:center">
+    {% if user.is_authenticated %}
+      <h1 class="display-3">Witaj, {{ user.username }}!</h1>
+      <h1> Dziś masz ochotę na... </h1>
+      <form class="d-flex p-4" role="search">
+          <input class="form-control me-2" type="search" placeholder="Mniam mniam mniam..." aria-label="Search">
+          <button class="btn btn-outline-info" type="submit">Szukaj!</button>
+      </form>
+      <a class="btn btn-lg btn-info" href="/" role="button">Moje przepisy &raquo;</a>
+      <a class="btn btn-lg btn-info" href="{% url 'recipes:add_recipe' %}" role="button">Dodaj przepis &raquo;</a>
+      <a class="btn btn-lg btn-info" href="{% url 'recipes:index' %}" role="button">Eksploruj &raquo;</a>
+    {% else %}
+      <h1> Dziś mam ochotę na... </h1>
+      <form class="d-flex p-4" role="search">
+          <input class="form-control me-2" type="search" placeholder="Mniam mniam mniam..." aria-label="Search">
+          <button class="btn btn-outline-info" type="submit">Szukaj!</button>
+      </form>
+    {% endif %}
 </div>
 {% endblock page_header %}
 {% block content %}
