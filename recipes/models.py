@@ -21,6 +21,7 @@ class Tag(models.Model):
 
 class Recipe(models.Model):
     """Recipe added by the user."""
+    image = models.ImageField(null=True, blank=True)
     title = models.CharField(max_length=200)
     content = models.TextField()
     publication_date = models.DateTimeField(auto_now_add=True)

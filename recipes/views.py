@@ -13,10 +13,15 @@ def home(request):
     return render(request, 'recipes/home.html')
 
 
-def show_recipes(request, tag_id):
-    tag = get_object_or_404(Tag, id=tag_id)
-    recipes = tag.recipe_set.all()
-    context = {'tag': tag, 'recipes': recipes, }
+# def show_recipes(request, tag_id):
+#     tag = get_object_or_404(Tag, id=tag_id)
+#     recipes = tag.recipe_set.all()
+#     context = {'tag': tag, 'recipes': recipes, }
+#     return render(request, 'recipes/recipes.html', context)
+
+def show_recipes(request):
+    recipes = Recipe.objects.all()
+    context = {'recipes': recipes}
     return render(request, 'recipes/recipes.html', context)
 
 
