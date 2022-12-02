@@ -7,13 +7,6 @@
 </head>
 <body>
 {% block content %}
-<div class="mt-4 p-5 bg-dark text-white rounded" >
-    <h2>Przepisy</h2>
-   {% for recipe in recipes %}
-    <a class="btn btn-lg btn-info my-2 my-sm-0" href="{% url 'recipes:recipe' recipe.id %}" role="button">{{ recipe }}</a>
-   {% endfor %}
-</div>
-
 
 {% if recipes %}
 
@@ -22,12 +15,14 @@
 
         {% for recipe in recipes %}
             <div class="col">
-              <div class="card m-3" style="width: 18rem;">
+              <div class="card m-3" style="width: 20rem;">
                   <img src="{{ recipe.image.url }}" class="card-img-top" alt="...">
                   <div class="card-body">
-                    <h5 class="card-title m-1">{{ recipe.name }}</h5>
-                    <h5 class="card-subtitle m-1">{{ product.price }} zł</h5>
-                    <a style='float:right;' href="{% url 'products:product_detail' product.id %}" class="btn btn-secondary">Szczegóły &raquo;</a>
+                    <h5 class="card-title m-1">{{ recipe.title }}</h5>
+                    <h5 class="card-subtitle m-1">{{ recipe.user }}</h5>
+                    <a style='float:right;' href="{% url 'recipes:show_recipe' recipe.id %}" class="btn btn-secondary">Szczegóły &raquo;</a>
+                  </div>
+                  <div class="card-footer text-muted text-center">{{ recipe.preparation_time }}, {{ recipe.servings }}
                   </div>
               </div>
             </div>

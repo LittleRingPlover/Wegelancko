@@ -22,14 +22,13 @@ def home(request):
 def show_recipes(request):
     recipes = Recipe.objects.all()
     context = {'recipes': recipes}
-    return render(request, 'recipes/recipes.html', context)
+    return render(request, 'recipes/show_recipes.html', context)
 
 
-def show_recipe(request, recipe_id):
-    recipe = get_object_or_404(Recipe, id=recipe_id)
-    category = recipe.category.all()
-    context = {'recipe': recipe, 'category': category}
-    return render(request, 'recipes/recipe.html', context)
+def show_recipe(request, pk):
+    recipe = get_object_or_404(Recipe, id=pk)
+    context = {'recipe': recipe}
+    return render(request, 'recipes/recipe_detail.html', context)
 
 
 def add_recipe(request):
