@@ -11,7 +11,7 @@ class Owner(models.Model):
         return self.name
 
 
-class Tag(models.Model):
+class Category(models.Model):
     objects = None
     title = models.CharField(max_length=100)
 
@@ -23,11 +23,14 @@ class Recipe(models.Model):
     """Recipe added by the user."""
     image = models.ImageField(null=True, blank=True)
     title = models.CharField(max_length=200)
+    preparation_time = models.CharField(max_length=20, default='test')
+    servings = models.CharField(max_length=200, default='test')
+    ingredients = models.TextField(default='test')
     content = models.TextField()
     publication_date = models.DateTimeField(auto_now_add=True)
     edition_date = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
-    tag = models.ManyToManyField(Tag)
+    category = models.ManyToManyField(Category)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

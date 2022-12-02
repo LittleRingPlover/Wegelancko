@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from recipes.models import Owner, Recipe, Comments, Tag
+from recipes.models import Owner, Recipe, Comments, Category
 
 
 def index(request):
-    tags = Tag.objects.filter()
-    context = {'tags': tags}
+    categories = Category.objects.filter()
+    context = {'categories': categories}
     return render(request, 'recipes/index.html', context)
 
 
@@ -27,8 +27,8 @@ def show_recipes(request):
 
 def show_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    tag = recipe.tag.all()
-    context = {'recipe': recipe, 'tag': tag}
+    category = recipe.category.all()
+    context = {'recipe': recipe, 'category': category}
     return render(request, 'recipes/recipe.html', context)
 
 

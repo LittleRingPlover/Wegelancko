@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from recipes.models import Owner, Recipe, Comments, Tag, User
+from recipes.models import Owner, Recipe, Comments, Category, User
 # Register your models here.
 
 
@@ -34,11 +34,11 @@ class OwnerAdmin(admin.ModelAdmin):
             return ''
 
 
-class TagAdmin(admin.ModelAdmin):
+class CategoryAdmin(admin.ModelAdmin):
     list_display = ('title',)
 
 
 admin.site.register(Owner, OwnerAdmin)
 admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(Comments, CommentsAdmin)
-admin.site.register(Tag, TagAdmin)
+admin.site.register(Category, CategoryAdmin)
