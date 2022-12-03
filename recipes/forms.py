@@ -1,8 +1,8 @@
-from django.forms import ModelForm, Textarea
-from .models import Owner, Tag, Recipe, Comments
+from django import forms
+from .models import Owner, Category, Recipe, Comments
 
 
-class OwnerForm(ModelForm):
+class OwnerForm(forms.ModelForm):
     class Meta:
         model = Owner
         fields = '__all__'
@@ -12,16 +12,16 @@ class OwnerForm(ModelForm):
         }
 
 
-class TagForm(ModelForm):
+class CategoryForm(forms.ModelForm):
     class Meta:
-        model = Tag
+        model = Category
         fields = '__all__'
         labels = {
             'title': '',
         }
 
 
-class RecipeForm(ModelForm):
+class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = '__all__'
@@ -30,11 +30,20 @@ class RecipeForm(ModelForm):
             'content': '',
         }
         widgets = {
-            'content': Textarea(attrs={'cols': 80, 'rows': 20})
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'preparation_time': forms.TextInput(attrs={'class': 'form-control'}),
+            'servings': forms.TextInput(attrs={'class': 'form-control'}),
+            'ingredients': forms.Textarea(attrs={'cols': 80, 'rows': 10, 'class': 'form-control'}),
+            'content': forms.Textarea(attrs={'cols': 80, 'rows': 20, 'class': 'form-control'}),
+            'publication_date': forms.TextInput(attrs={'class': 'form-control'}),
+            'owner': forms.TextInput(attrs={'class': 'form-control'}),
+            'category': forms.TextInput(attrs={'class': 'form-control'}),
+            'user': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
 
-class CommentsForm(ModelForm):
+class CommentsForm(forms.ModelForm):
     class Meta:
         model = Comments
         fields = '__all__'
@@ -44,5 +53,5 @@ class CommentsForm(ModelForm):
             'user': '',
         }
         widgets = {
-            'content': Textarea(attrs={'cols': 80, 'rows': 20})
+            'content': forms.Textarea(attrs={'cols': 80, 'rows': 20})
         }

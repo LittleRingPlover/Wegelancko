@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from recipes.models import Owner, Recipe, Comments, Category
+from .forms import RecipeForm
 
 
 def index(request):
@@ -39,4 +40,15 @@ def show_recipe(request, pk):
 
 
 def add_recipe(request):
-    return render(request, 'add_recipe.html')
+    form = RecipeForm()
+
+    if request.method == "POST":
+        form = RecipeForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('recipes/show_recipes.html')
+    else:
+        form = RecipeForm()
+
+    context = {'form': form}
+    return render(request, 'recipes/add_recipe.html', context)

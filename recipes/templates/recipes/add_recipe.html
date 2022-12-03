@@ -1,10 +1,23 @@
-<!DOCTYPE html>
+{% extends 'recipes/base.html' %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Dodaj przepis</title>
 </head>
 <body>
+{% block page_header %}
+{% endblock page_header %}
+{% block content %}
+<h3>Dodaj przepis</h3>
 
+<div class="container m-5">
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" name="Submit">Submit
+</form>
+</div>
+{% endblock content %}
 </body>
 </html>
