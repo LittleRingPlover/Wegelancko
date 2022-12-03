@@ -5,7 +5,14 @@ from recipes.models import Owner, Recipe, Comments, Category
 
 def index(request):
     categories = Category.objects.filter()
-    context = {'categories': categories}
+    first_recipe = Recipe.objects.order_by('-id')[0]
+    second_recipe = Recipe.objects.order_by('-id')[1]
+    third_recipe = Recipe.objects.order_by('-id')[2]
+    context = {'categories': categories,
+               'first_recipe': first_recipe,
+               'second_recipe': second_recipe,
+               'third_recipe': third_recipe,
+               }
     return render(request, 'recipes/index.html', context)
 
 
