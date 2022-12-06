@@ -1,5 +1,5 @@
 from django import forms
-from .models import Owner, Category, Recipe, Comments
+from .models import Owner, Category, Recipe, Comments, CATEGORY_CHOICES
 
 
 class OwnerForm(forms.ModelForm):
@@ -16,9 +16,12 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = '__all__'
-        labels = {
-            'title': '',
-        }
+        # labels = {
+        #     'title': 'Kategoria',
+        # }
+        # widgets = {
+        #     'title': forms.Select(choices=CATEGORY_CHOICES)
+        # }
 
 
 class RecipeForm(forms.ModelForm):
@@ -26,9 +29,11 @@ class RecipeForm(forms.ModelForm):
         model = Recipe
         fields = '__all__'
         labels = {
-            'title': '',
-            'content': '',
+            'title': 'Nazwa',
+            'content': 'Treść',
         }
+
+        category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), to_field_name='title')
         widgets = {
             'image': forms.FileInput(attrs={'class': 'form-control'}),
             'title': forms.TextInput(attrs={'class': 'form-control'}),
@@ -38,7 +43,6 @@ class RecipeForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'cols': 80, 'rows': 20, 'class': 'form-control'}),
             'publication_date': forms.TextInput(attrs={'class': 'form-control'}),
             'owner': forms.TextInput(attrs={'class': 'form-control'}),
-            'category': forms.TextInput(attrs={'class': 'form-control'}),
             'user': forms.TextInput(attrs={'class': 'form-control'}),
         }
 

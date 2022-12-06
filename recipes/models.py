@@ -11,9 +11,18 @@ class Owner(models.Model):
         return self.name
 
 
+CATEGORY_CHOICES = [
+    ('Breakfast', 'Śniadania'),
+    ('Apetizers', 'Przystawki'),
+    ('Soups', 'Zupy'),
+    ('Main dishes', 'Dania główne'),
+    ('Desserts', 'Ciasta i desery'),
+]
+
+
 class Category(models.Model):
     objects = None
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
 
     def __str__(self):
         return self.title
