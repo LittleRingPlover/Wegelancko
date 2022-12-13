@@ -44,7 +44,7 @@ def add_recipe(request):
 
     if request.method == "POST":
         form = RecipeForm(request.POST, request.FILES)
-        print(request.FILES)
+
         if form.is_valid():
             new_recipe = form.save(commit=False)
             new_recipe.user = request.user
@@ -56,3 +56,20 @@ def add_recipe(request):
 
     context = {'form': form}
     return render(request, 'recipes/add_recipe.html', context)
+
+
+def update_recipe(request, pk):
+    recipe = Recipe.objects.get(id=pk)
+
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, request.FILES, instance=recipe)
+        if form.is_valid():
+            updated_recipe = form.save(commit=False)
+            updated_recipe.user = request.user
+            updated_recipe.save()
+            return redirect('recipes:show_recipe', pk=pk)
+    else:
+        form = RecipeForm(instance=recipe)
+
+    context = {'recipe': recipe, 'form': form}
+    return render(request, 'recipes/update_recipe.html', context)

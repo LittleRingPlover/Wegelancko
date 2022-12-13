@@ -9,6 +9,7 @@
 {% block content %}
 <div class="my-4 p-5 bg-dark text-white rounded" >
     <a href="{% url 'recipes:show_recipes' %}"> &laquo; Powrót</a>
+    <a style='float:right;' href="{% url 'recipes:update_recipe' recipe.id %}">Edytuj &raquo;</a>
   <div class="text-center mb-5"><h2>{{ recipe.title }}</h2>
   </div>
     <img class="img-fluid img-thumbnail mx-auto d-block mb-5" src="{{ recipe.image.url }}" style="width:400px;height:500px;" alt="Card image tap">
