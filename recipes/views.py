@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django_registration.forms import User
+
 from recipes.models import Owner, Recipe, Comments, Category
 from .forms import RecipeForm
 
@@ -40,13 +41,16 @@ def show_recipe(request, pk):
 
 
 def add_recipe(request):
-    form = RecipeForm()
 
     if request.method == "POST":
         form = RecipeForm(request.POST, request.FILES)
+        print(request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('recipes/show_recipes.html')
+            new_recipe = form.save(commit=False)
+            new_recipe.user = request.user
+            new_recipe.save()
+
+            return redirect('recipes:show_recipes')
     else:
         form = RecipeForm()
 

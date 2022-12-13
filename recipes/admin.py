@@ -9,9 +9,9 @@ class CommentsInline(admin.StackedInline):
 
 
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('title', 'owner', 'user')
-    list_filter = ('owner', 'user')
-    search_fields = ('title', 'owner__name', 'user')
+    list_display = ('title', 'user')
+    list_filter = ('user',)
+    search_fields = ('title', 'user')
     inlines = [
         CommentsInline,
     ]
