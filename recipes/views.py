@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django_registration.forms import User
-
+from django.views.generic.edit import DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from recipes.models import Owner, Recipe, Comments, Category
 from .forms import RecipeForm
 
@@ -73,3 +75,9 @@ def update_recipe(request, pk):
 
     context = {'recipe': recipe, 'form': form}
     return render(request, 'recipes/update_recipe.html', context)
+
+
+class RecipeDelete(LoginRequiredMixin, DeleteView):
+    model = Recipe
+    context_object_name = 'recipe'
+    success_url = reverse_lazy('recipes:show_recipes')
