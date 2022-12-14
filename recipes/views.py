@@ -92,3 +92,15 @@ class RecipeDelete(LoginRequiredMixin, DeleteView):
     model = Recipe
     context_object_name = 'recipe'
     success_url = reverse_lazy('recipes:show_recipes')
+
+
+def search_recipe(request):
+    if request.method == "GET":
+        query = request.GET.get('query')
+        if query:
+            recipes = Recipe.objects.filter(title__icontains=query)
+            context = {'recipes': recipes}
+            return render(request, 'recipes/search_recipe.html', context)
+        else:
+            print("Brak elementów spełniających kryteria wyszukiwania...")
+            return render(request, 'recipes/search_recipe.html', {})
