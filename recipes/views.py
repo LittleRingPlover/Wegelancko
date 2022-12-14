@@ -5,6 +5,7 @@ from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from recipes.models import Owner, Recipe, Comments, Category
 from .forms import RecipeForm
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def index(request):
@@ -31,7 +32,17 @@ def home(request):
 #     return render(request, 'recipes/recipes.html', context)
 
 def show_recipes(request):
-    recipes = Recipe.objects.all()
+    recipes = Recipe.objects.order_by('-publication_date')
+    paginator = Paginator(recipes, 6)
+    page_number = request.GET.get('page')
+
+    try:
+        recipes = paginator.page(page_number)
+    except PageNotAnInteger:
+        recipes = paginator.page(1)
+    except EmptyPage:
+        recipes = paginator.page(paginator.num_pages)
+
     context = {'recipes': recipes}
     return render(request, 'recipes/show_recipes.html', context)
 
