@@ -7,11 +7,12 @@
 </head>
 <body>
 {% block page_header %}
-<div class="mt-4 p-5 bg-dark text-white rounded">
+<div class="mt-4 p-5 bg-light text-dark rounded">
   <form method="POST">
         {% csrf_token %}
         <p class="lead">Czy na pewno chcesz usunąć przepis "{{ recipe.title }}"? </p>
-        <input class="btn btn-secondary" type="submit" value="Usuń"/>
+        <a style="float:left;" class="btn btn-success me-2" href="{% url 'recipes:show_recipe' recipe.id %}"> &laquo; Powrót</a>
+        <input class="btn btn-danger" type="submit" value="Usuń"/>
     </form>
 </div>
 {% endblock page_header %}

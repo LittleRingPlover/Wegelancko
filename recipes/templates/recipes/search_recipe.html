@@ -16,7 +16,7 @@
                   <div class="card-body">
                     <h5 class="card-title m-1">{{ recipe.title }}</h5>
                     <h5 class="card-subtitle m-1">{{ recipe.user }}</h5>
-                    <a style='float:right;' href="{% url 'recipes:show_recipe' recipe.id %}" class="btn btn-secondary">Szczegóły &raquo;</a>
+                    <a style='float:right;' href="{% url 'recipes:show_recipe' recipe.id %}" class="btn btn-success">Szczegóły &raquo;</a>
                   </div>
                   <div class="card-footer text-muted text-center">{{ recipe.preparation_time }}, {{ recipe.servings }}
                   </div>

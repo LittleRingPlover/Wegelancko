@@ -7,30 +7,29 @@
 </head>
 <body>
 {% block page_header %}
-<div class="mt-4 p-5 bg-dark text-white rounded" style="text-align:center">
+<div class="mt-4 p-5 bg-light text-dark rounded" style="text-align:center">
     {% if user.is_authenticated %}
-      <h1 class="display-3">Cześć, {{ user.username }}!</h1>
-      <h1> Dziś masz ochotę na... </h1>
-      <form class="d-flex p-4" role="search">
-          <input class="form-control me-2" type="search" placeholder="Mniam mniam mniam..." aria-label="Search">
-          <button class="btn btn-outline-info" type="submit">Szukaj!</button>
-      </form>
-      <a class="btn btn-lg btn-info" href="{% url 'recipes:show_recipes' %}" role="button">Moje przepisy &raquo;</a>
-      <a class="btn btn-lg btn-info" href="{% url 'recipes:add_recipe' %}" role="button">Dodaj przepis &raquo;</a>
-      <a class="btn btn-lg btn-info" href="{% url 'recipes:index' %}" role="button">Eksploruj &raquo;</a>
+      <h1 class="display-3 pb-3">Cześć, {{ user.username }}!</h1>
+      <a class="btn btn-lg btn-success" href="{% url 'recipes:show_recipes' %}" role="button">Moje przepisy &raquo;</a>
+      <a class="btn btn-lg btn-success" href="{% url 'recipes:add_recipe' %}" role="button">Dodaj przepis &raquo;</a>
+      <a class="btn btn-lg btn-success" href="{% url 'recipes:index' %}" role="button">Eksploruj &raquo;</a>
     {% else %}
-      <h1> Dziś mam ochotę na... </h1>
-      <form class="d-flex p-4" role="search">
-          <input class="form-control me-2" type="search" placeholder="Mniam mniam mniam..." aria-label="Search">
-          <button class="btn btn-outline-info" type="submit">Szukaj!</button>
-      </form>
+    <div class="p-2 bg-light text-dark rounded">
+      <h1 class="display-3 pb-3">Cześć!</h1>
+      <p class="lead">Zaloguj się do Wegelancko i zacznij swoją wegańską przygodę
+        in an elegant way. Bo czemu nie? :)</p>
+      <a class="btn btn-lg btn-success me-2" href="{% url 'users:register' %}" role="button">Zarejestruj się &raquo;</a>
+      <a class="btn btn-lg btn-success my-1" href="{% url 'users:login' %}" role="button">Zaloguj się &raquo;</a>
+      <p class="lead pt-3"> Możesz też przeglądać przepisy innych bez zakładania konta. Do dzieła!</p>
+      <a class="btn btn-lg btn-success my-1" href="{% url 'recipes:show_recipes' %}" role="button">Eksploruj! &raquo;</a>
+    </div>
     {% endif %}
 </div>
 {% endblock page_header %}
 
 {% block content %}
 
-<div class="mt-4 p-5 bg-dark text-white rounded" >
+<div class="mt-4 p-5 bg-light text-dark rounded" >
     <div class="text-center mb-3"><h2>Ostatnio dodane przepisy</h2></div>
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
       <div class="carousel-indicators">
@@ -42,31 +41,31 @@
         <div class="carousel-item active">
           <img src="{{ first_recipe.image.url }}" class="d-block w-50 mx-auto d-block" alt="...">
           <div class="carousel-caption d-none d-md-block text-dark">
-            <h3>{{ first_recipe.title }}</h3>
+            <h3><a href="{% url 'recipes:show_recipe' first_recipe.id %}" style="text-decoration: none;" class="text-success">{{ first_recipe.title }}</a></h3>
             <p>{{ first_recipe.preparation_time }}, {{ first_recipe.servings }}</p>
           </div>
         </div>
         <div class="carousel-item">
           <img src="{{ second_recipe.image.url }}" class="d-block w-50 mx-auto d-block" alt="...">
           <div class="carousel-caption d-none d-md-block text-dark">
-            <h3>{{ second_recipe.title }}</h3>
+            <h3><a href="{% url 'recipes:show_recipe' second_recipe.id %}" style="text-decoration: none;" class="text-success">{{ second_recipe.title }}</a></h3>
             <p>{{ second_recipe.preparation_time }}, {{ second_recipe.servings }}</p>
           </div>
         </div>
         <div class="carousel-item">
           <img src="{{ third_recipe.image.url }}" class="d-block w-50 mx-auto d-block" alt="...">
-          <div class="carousel-caption d-none d-md-block text-dark">
-            <h3>{{ third_recipe.title }}</h3>
+          <div class="carousel-caption d-none d-md-block text-dark ">
+            <h3><a href="{% url 'recipes:show_recipe' third_recipe.id %}" style="text-decoration: none;" class="text-success">{{ third_recipe.title }}</a></h3>
             <p>{{ third_recipe.preparation_time }}, {{ third_recipe.servings }}</p>
           </div>
         </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
       </button>
       <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
 </div>

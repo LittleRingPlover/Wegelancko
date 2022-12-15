@@ -7,13 +7,17 @@
 </head>
 <body>
 {% block content %}
-<div class="my-4 p-5 bg-dark text-white rounded" >
-    <a class="btn btn-secondary" href="{% url 'recipes:show_recipes' %}" role="button"> &laquo; Powrót</a>
-    <a style='float:right;' class="btn btn-secondary" href="{% url 'recipes:update_recipe' recipe.id %}" role="button">Edytuj &raquo;</a>
+<div class="my-4 p-5 bg-light text-dark rounded" >
+    <a class="btn btn-success" href="{% url 'recipes:show_recipes' %}" role="button"> &laquo; Powrót</a>
+    <a style='float:right;' class="btn btn-success" href="{% url 'recipes:update_recipe' recipe.id %}" role="button">Edytuj &raquo;</a>
   <div class="text-center mb-5"><h2>{{ recipe.title }}</h2>
   </div>
     <img class="img-fluid img-thumbnail mx-auto d-block mb-5" src="{{ recipe.image.url }}" style="width:400px;height:500px;" alt="Card image tap">
-  {{ recipe.content|escape|linebreaks }}
+    <b>Kategoria:</b> {{ recipe.category|escape|linebreaks }}
+    <b>Czas przygotowania:</b> {{ recipe.preparation_time|escape|linebreaks }}
+    <b>Ilość porcji:</b> {{ recipe.servings|escape|linebreaks }}
+    <b>Składniki:</b> {{ recipe.ingredients|escape|linebreaks }}
+    <b>Przygotowanie:</b> {{ recipe.content|escape|linebreaks }}
     <a style='float:right;' class="btn btn-danger" href="{% url 'recipes:recipe-delete' recipe.id %}" role="button">Usuń przepis &raquo;</a>
 </div>
 {% endblock content %}
