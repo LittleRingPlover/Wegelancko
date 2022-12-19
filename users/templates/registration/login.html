@@ -14,7 +14,7 @@
   {% csrf_token %}
   {% bootstrap_form form %}
   {% buttons %}
-    <button name="submit" class="btn btn-info">Zaloguj &raquo;</button>
+    <button name="submit" class="btn btn-success">Zaloguj &raquo;</button>
   {% endbuttons %}
   <input type="hidden" name="next"
   value="{% url 'recipes:index' %}"/>

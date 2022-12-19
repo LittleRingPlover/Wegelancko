@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django_registration.forms import User
@@ -6,14 +7,32 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from recipes.models import Owner, Recipe, Comments, Category
 from .forms import RecipeForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
 
 
 def index(request):
-    categories = Category.objects.filter()
+    category = request.GET.get('category')
+    if category is None:
+        recipes = Recipe.objects.order_by('-publication_date').filter()
+    else:
+        recipes = Recipe.objects.filter(category__title=category)
+
+    # recipe = Recipe.objects.all()
+    # if Recipe.objects.filter().exists():
+    #     first_recipe = Recipe.objects.order_by('-id')[0]
+    #     second_recipe = Recipe.objects.order_by('-id')[1]
+    #     third_recipe = Recipe.objects.order_by('-id')[2]
+    # else:
+    #     print('W bazie danych nie ma jeszcze przepisów. Dodaj je!')
     first_recipe = Recipe.objects.order_by('-id')[0]
     second_recipe = Recipe.objects.order_by('-id')[1]
     third_recipe = Recipe.objects.order_by('-id')[2]
-    context = {'categories': categories,
+
+    categories = Category.objects.all()
+
+    context = {
+               'recipes': recipes,
+               'categories': categories,
                'first_recipe': first_recipe,
                'second_recipe': second_recipe,
                'third_recipe': third_recipe,
@@ -43,8 +62,27 @@ def show_recipes(request):
     except EmptyPage:
         recipes = paginator.page(paginator.num_pages)
 
-    context = {'recipes': recipes}
+    categories = Category.objects.all()
+    context = {'recipes': recipes, 'categories': categories}
     return render(request, 'recipes/show_recipes.html', context)
+
+
+@login_required
+def show_my_recipes(request):
+    my_recipes = Recipe.objects.filter(user=request.user).order_by('-publication_date')
+    paginator = Paginator(my_recipes, 6)
+    page_number = request.GET.get('page')
+
+    try:
+        my_recipes = paginator.page(page_number)
+    except PageNotAnInteger:
+        my_recipes = paginator.page(1)
+    except EmptyPage:
+        my_recipes = paginator.page(paginator.num_pages)
+
+    categories = Category.objects.all()
+    context = {'my_recipes': my_recipes, 'categories': categories}
+    return render(request, 'recipes/show_my_recipes.html', context)
 
 
 def show_recipe(request, pk):
@@ -95,10 +133,11 @@ class RecipeDelete(LoginRequiredMixin, DeleteView):
 
 
 def search_recipe(request):
-    if request.method == "GET":
+    if request.method == 'GET':
         query = request.GET.get('query')
         if query:
             recipes = Recipe.objects.filter(title__icontains=query)
+
             context = {'recipes': recipes}
             return render(request, 'recipes/search_recipe.html', context)
         else:

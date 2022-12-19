@@ -1,38 +1,32 @@
 from django import forms
-from .models import Owner, Category, Recipe, Comments, CATEGORY_CHOICES
-
-choices = Category.objects.all().values_list('title', 'title')
-choices_list = []
-for item in choices:
-    choices_list.append(item)
+from .models import Owner, Category, Recipe, Comments, DifficultyLevel
 
 
 class OwnerForm(forms.ModelForm):
     class Meta:
         model = Owner
-        fields = '__all__'
+        fields = ('name',)
         labels = {
             'name': '',
-            'website': '',
         }
 
 
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ('title',)
+
+
+class DifficultyLevelForm(forms.ModelForm):
+    class Meta:
+        model = DifficultyLevel
+        fields = ('level',)
 
 
 class RecipeForm(forms.ModelForm):
-    title = forms.TextInput()
-    preparation_time = forms.TextInput()
-    servings = forms.TextInput()
-    ingredients = forms.TextInput()
-    content = forms.TextInput()
-
     class Meta:
         model = Recipe
-        exclude = ['publication_date', 'edition_date', 'user', 'owner']
+        exclude = ['publication_date', 'edition_date', 'user']
         labels = {
             'image': 'Dodaj zdjęcie jedzonka:',
             'title': '',
@@ -42,7 +36,8 @@ class RecipeForm(forms.ModelForm):
             'content': '',
             'publication_date': '',
             'category': 'Wybierz kategorię:',
-            'user': '',
+            'owner': 'Kto jest właścicielem przepisu?',
+            'level': 'Wybierz poziom trudności',
 
         }
 
@@ -65,12 +60,13 @@ class RecipeForm(forms.ModelForm):
                                              'class': 'form-control',
                                              'placeholder': 'Treść przepisu'
                                              }),
-            'category': forms.Select(choices=choices_list,
-                                     attrs={'class': 'form-control'
+            'owner': forms.TextInput(attrs={'class': 'form-control',
+                                            'placeholder': 'Np. Ty, Jadłonomia...'
                                             }),
-            # 'owner': forms.TextInput(attrs={'class': 'form-control',
-            #                                 'placeholder': 'Właściciel przepisu (skąd masz przepis?)'
-            #                                 }),
+            'category': forms.Select(attrs={'class': 'form-control'
+                                            }),
+            'level': forms.Select(attrs={'class': 'form-control'
+                                         }),
         }
 
 

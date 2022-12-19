@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from recipes.models import Owner, Recipe, Comments, Category, User
+from recipes.models import Owner, Recipe, Comments, Category, DifficultyLevel
 # Register your models here.
 
 
@@ -38,7 +38,12 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('title',)
 
 
+class DifficultyLevelAdmin(admin.ModelAdmin):
+    list_display = ('level',)
+
+
 admin.site.register(Owner, OwnerAdmin)
 admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(Comments, CommentsAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(DifficultyLevel)

@@ -24,18 +24,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'recipes:show_recipes' %}">Moje przepisy</a>
+              <a class="nav-link" href="{% url 'recipes:show_my_recipes' %}">Moje przepisy</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="{% url 'recipes:index' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Kategorie
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'recipes:index' %}">Śniadania</a></li>
-                <li><a class="dropdown-item" href="{% url 'recipes:index' %}">Przystawki</a></li>
-                <li><a class="dropdown-item" href="{% url 'recipes:index' %}">Zupy</a></li>
-                <li><a class="dropdown-item" href="{% url 'recipes:index' %}">Dania główne</a></li>
-                <li><a class="dropdown-item" href="{% url 'recipes:index' %}">Ciasta i desery</a></li>
+                {% for category in categories %}
+                <li><a class="dropdown-item" href="{% url 'recipes:show_recipes' %}?category={{ category.title }}">{{ category.title }}</a></li>
+                {% endfor %}
               </ul>
             </li>
             <li class="nav-item">
