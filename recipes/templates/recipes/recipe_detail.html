@@ -10,7 +10,8 @@
 <div class="my-4 p-5 bg-light text-dark rounded" >
     <a class="btn btn-success" href="{% url 'recipes:show_recipes' %}" role="button"> &laquo; Powrót</a>
     <a style='float:right;' class="btn btn-success" href="{% url 'recipes:update_recipe' recipe.id %}" role="button">Edytuj &raquo;</a>
-  <div class="text-center mb-5"><h2>{{ recipe.title }}</h2>
+  <div class="text-center mb-5">
+      <h2>{{ recipe.title }}</h2>
   </div>
     <img class="img-fluid img-thumbnail mx-auto d-block mb-5" src="{{ recipe.image.url }}" style="width:400px;height:500px;" alt="Card image tap">
     <b>Kategoria:</b> {{ recipe.category|escape|linebreaks }}
@@ -20,6 +21,21 @@
     <b>Składniki:</b> {{ recipe.ingredients|escape|linebreaks }}
     <b>Przygotowanie:</b> {{ recipe.content|escape|linebreaks }}
     <a style='float:right;' class="btn btn-danger" href="{% url 'recipes:recipe-delete' recipe.id %}" role="button">Usuń przepis &raquo;</a>
+</div>
+<div class="my-4 p-5 bg-light text-dark rounded" >
+  <div class="text-center mb-2">
+      <h2>Komentarze</h2>
+  </div>
+
+  {% if recipe.recipes.all %}
+        {% for comment in recipe.recipes.all %}
+    <p><strong>{{ comment.user }}</strong> - <i>{{ comment.publication_date }}</i></p>
+            <p>{{ comment.content }}</p>
+        {% endfor %}
+  {% else %}
+        <p>Nie dodano żadnych komentarzy...</p>
+  {% endif %}
+  <p><a class="btn btn-success" href="{% url 'recipes:add_comment' recipe.id %}" role="button">Dodaj komentarz </a></p>
 </div>
 {% endblock content %}
 </body>

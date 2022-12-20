@@ -32,7 +32,7 @@
               </a>
               <ul class="dropdown-menu">
                 {% for category in categories %}
-                <li><a class="dropdown-item" href="{% url 'recipes:show_recipes' %}?category={{ category.title }}">{{ category.title }}</a></li>
+                <li><a class="dropdown-item" href="{% url 'recipes:index' %}?category={{ category.title }}">{{ category.title }}</a></li>
                 {% endfor %}
               </ul>
             </li>

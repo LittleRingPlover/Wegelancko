@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -5,7 +7,7 @@ from django_registration.forms import User
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from recipes.models import Owner, Recipe, Comments, Category
-from .forms import RecipeForm
+from .forms import RecipeForm, CommentsForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 
@@ -13,7 +15,7 @@ from django.db.models import Q
 def index(request):
     category = request.GET.get('category')
     if category is None:
-        recipes = Recipe.objects.order_by('-publication_date').filter()
+        recipes = Recipe.objects.order_by('-publication_date')
     else:
         recipes = Recipe.objects.filter(category__title=category)
 
@@ -143,3 +145,27 @@ def search_recipe(request):
         else:
             print("Brak elementów spełniających kryteria wyszukiwania...")
             return render(request, 'recipes/search_recipe.html', {})
+
+
+def add_comment(request, pk):
+    recipe = Recipe.objects.get(id=pk)
+    form = CommentsForm(instance=recipe)
+    if request.method == 'POST':
+        form = CommentsForm(request.POST, instance=recipe)
+        if form.is_valid():
+            user = request.user
+            content = form.cleaned_data['content']
+            comment = Comments(content=content,
+                               recipe=recipe,
+                               publication_date=datetime.now(),
+                               edition_date=datetime.now(),
+                               user=user)
+            comment.save()
+            return redirect('recipes:show_recipe', recipe.id)
+        else:
+            print('Formularz jest nieprawidłowy.')
+    else:
+        form = CommentsForm()
+
+    context = {'form': form}
+    return render(request, 'recipes/add_comment.html', context)

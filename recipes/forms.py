@@ -73,12 +73,11 @@ class RecipeForm(forms.ModelForm):
 class CommentsForm(forms.ModelForm):
     class Meta:
         model = Comments
-        fields = '__all__'
+        fields = ('content', )
         labels = {
             'content': '',
-            'publication_date': '',
-            'user': '',
         }
         widgets = {
-            'content': forms.Textarea(attrs={'cols': 80, 'rows': 20})
+            'content': forms.Textarea(attrs={'cols': 80, 'rows': 20,
+                                      'class': 'form-control'})
         }
