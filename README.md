@@ -17,7 +17,6 @@ The project is still under development and it's missing important functionalitie
 - **CRUD operations** (function-based views in "recipes" app: *add_recipe*, *show_recipes*, *update_recipe*, *add_comment*; class-based view in "recipes" app: *RecipeDelete*),
 - **Search recipe** (function-based view in "recipe" app: *search_recipe*),
 - **Carousel with last three recipes** (function-based view in "recipe" app: *index*),
-- **Five Django models** (classes: *Owner*, *Category*, *DifficultyLevel*, *Recipe*, *Comments*),
 - **Adjusted Admin Page**,
 - **Configured MySQL Database**,
 - **All templates modified with Bootstrap 5**.
