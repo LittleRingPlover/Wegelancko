@@ -12,12 +12,11 @@ The project is still under development and it's missing important functionalitie
 
 ## Features
 
-- **Registration** (function-based view in app "users": *register*),
+- **Registration** (function-based view in "users" app: *register*),
 - **Login** (Django built-in authentication system),
-- **CRUD operations** (function-based views in app "recipes": *add_recipe*, *update_recipe*, *add_comment*; class-based view in app "recipes": *RecipeDelete*),
-- **Search recipe** (function-based view in app "recipe": *search_recipe*),
-- **Showing my recipes and all recipes from the database** (function-based view in app "recipe": *show_my_recipes* and *show_recipes*),
-- **Carousel with last three recipes** (function-based view in app "recipe": *index*),
+- **CRUD operations** (function-based views in "recipes" app: *add_recipe*, *show_recipes*, *update_recipe*, *add_comment*; class-based view in "recipes" app: *RecipeDelete*),
+- **Search recipe** (function-based view in "recipe" app: *search_recipe*),
+- **Carousel with last three recipes** (function-based view in "recipe" app: *index*),
 - **Five Django models** (classes: *Owner*, *Category*, *DifficultyLevel*, *Recipe*, *Comments*),
 - **Adjusted Admin Page**,
 - **Configured MySQL Database**,
