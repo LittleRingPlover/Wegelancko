@@ -9,8 +9,10 @@
 {% block content %}
 <div class="my-4 p-5 bg-light text-dark rounded" >
     <a class="btn btn-success" href="{% url 'recipes:show_recipes' %}" role="button"> &laquo; Powrót</a>
-    <a style='float:right;' class="btn btn-success" href="{% url 'recipes:update_recipe' recipe.id %}" role="button">Edytuj &raquo;</a>
-  <div class="text-center mb-5">
+    {% if recipe.user == request.user %}
+        <a style='float:right;' class="btn btn-success" href="{% url 'recipes:update_recipe' recipe.id %}" role="button">Edytuj &raquo;</a>
+    {% endif %}
+    <div class="text-center mb-5">
       <h2>{{ recipe.title }}</h2>
   </div>
     <img class="img-fluid img-thumbnail mx-auto d-block mb-5" src="{{ recipe.image.url }}" style="width:400px;height:500px;" alt="Card image tap">
@@ -20,7 +22,9 @@
     <b>Ilość porcji:</b> {{ recipe.servings|escape|linebreaks }}
     <b>Składniki:</b> {{ recipe.ingredients|escape|linebreaks }}
     <b>Przygotowanie:</b> {{ recipe.content|escape|linebreaks }}
+    {% if recipe.user == request.user %}
     <a style='float:right;' class="btn btn-danger" href="{% url 'recipes:recipe-delete' recipe.id %}" role="button">Usuń przepis &raquo;</a>
+    {% endif %}
 </div>
 <div class="my-4 p-5 bg-light text-dark rounded" >
   <div class="text-center mb-2">
@@ -35,7 +39,11 @@
   {% else %}
         <p>Nie dodano żadnych komentarzy...</p>
   {% endif %}
-  <p><a class="btn btn-success" href="{% url 'recipes:add_comment' recipe.id %}" role="button">Dodaj komentarz </a></p>
+  {% if user.is_authenticated %}
+        <p><a class="btn btn-success" href="{% url 'recipes:add_comment' recipe.id %}" role="button">Dodaj komentarz </a></p>
+    {% else %}
+        <p><a class="btn btn-success" href="{% url 'users:login' %}" role="button">Zaloguj się, żeby dodać komentarz</a></p>
+    {% endif %}
 </div>
 {% endblock content %}
 </body>

@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django_registration.forms import User
@@ -40,6 +41,11 @@ def index(request):
                'third_recipe': third_recipe,
                }
     return render(request, 'recipes/index.html', context)
+
+
+def check_recipe_owner(request, recipe):
+    if recipe.user != request.user:
+        raise Http404
 
 
 def show_recipes(request):
@@ -103,16 +109,18 @@ def add_recipe(request):
 
 def update_recipe(request, pk):
     recipe = Recipe.objects.get(id=pk)
+    check_recipe_owner(request, recipe)
 
-    if request.method == 'POST':
-        form = RecipeForm(request.POST, request.FILES, instance=recipe)
-        if form.is_valid():
-            updated_recipe = form.save(commit=False)
-            updated_recipe.user = request.user
-            updated_recipe.save()
-            return redirect('recipes:show_recipe', pk=pk)
-    else:
-        form = RecipeForm(instance=recipe)
+    if recipe.user == request.user:
+        if request.method == 'POST':
+            form = RecipeForm(request.POST, request.FILES, instance=recipe)
+            if form.is_valid():
+                updated_recipe = form.save(commit=False)
+                updated_recipe.user = request.user
+                updated_recipe.save()
+                return redirect('recipes:show_recipe', pk=pk)
+        else:
+            form = RecipeForm(instance=recipe)
 
     context = {'recipe': recipe, 'form': form}
     return render(request, 'recipes/update_recipe.html', context)
