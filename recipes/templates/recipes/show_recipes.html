@@ -13,16 +13,26 @@
 
 </head>
 <body>
+{% block page_header %}
+<div class="mt-4 p-5 bg-light text-dark rounded" style="text-align:center">
+    <div class="text-center mb-5"><h2>Wegelanckie kategorie</h2></div>
+    <p><a class="btn btn-lg btn-success my-1" href="{% url 'recipes:show_recipes' %}" role="button">Wszystkie przepisy</a></p>
+    {% for category in categories %}
+    <a class="btn btn-lg btn-success my-1" href="{% url 'recipes:show_recipes' %}?categories={{ category.id }}" role="button">{{ category.title }}</a>
+    {% endfor %}
+</div>
+{% endblock page_header %}
 {% block content %}
-<div class="mb-5" align="center"><h2>Wszystkie przepisy</h2></div>
 
-{% if recipes %}
+{% if filtered_recipes %}
+
+    <div class="mb-5" align="center"><h2>Wszystkie przepisy</h2></div>
 
     <div class="container">
         <div class="row justify-content-center row-cols-1 row-cols-md-3 g-4">
 
-        {% for recipe in recipes %}
-            <div class="col">
+        {% for recipe in filtered_recipes %}
+            <div class="col" align="center">
               <div class="card m-3" style="width: 20rem;">
                   <img src="{{ recipe.image.url }}" class="card-img-top" alt="...">
                   <div class="card-body">
@@ -46,11 +56,11 @@
 <div class="row m-5">
     <div class="col-md-12 m-3">
 
-        {% if recipes.has_other_pages %}
+        {% if filtered_recipes.has_other_pages %}
             <ul class="pagination justify-content-center">
-                {% if recipes.has_previous %}
+                {% if filtered_recipes.has_previous %}
                     <li class="page-item">
-                        <a href="?page={{ recipes.previous_page_number }}" class="page-link">&laquo;</a>
+                        <a href="?page={{ filtered_recipes.previous_page_number }}" class="page-link">&laquo;</a>
                     </li>
                 {% else %}
                     <li class="page-item disabled">
@@ -58,8 +68,8 @@
                     </li>
                 {% endif %}
 
-                {% for i in recipes.paginator.page_range %}
-                    {% if recipes.number == i %}
+                {% for i in filtered_recipes.paginator.page_range %}
+                    {% if filtered_recipes.number == i %}
                         <li class="page-item active">
                             <a href="?page={{ i }}" class="page-link">{{ i }}</a>
                         </li>
@@ -70,13 +80,13 @@
                     {% endif %}
                 {% endfor %}
 
-                {% if recipes.has_next %}
+                {% if filtered_recipes.has_next %}
                     <li class="page-item">
-                        <a href="?page={{ recipes.next_page_number }}" class="page-link">&raquo;</a>
+                        <a href="?page={{ filtered_recipes.next_page_number }}" class="page-link">&raquo;</a>
                     </li>
                 {% else %}
                     <li class="page-item disabled">
-                        <a href="?page={{ recipes.paginator.number_pages }}" class="page-link">&raquo;</a>
+                        <a href="?page={{ filtered_recipes.paginator.number_pages }}" class="page-link">&raquo;</a>
                     </li>
                 {% endif %}
             </ul>

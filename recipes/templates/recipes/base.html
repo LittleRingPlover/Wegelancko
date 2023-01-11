@@ -26,16 +26,6 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'recipes:show_my_recipes' %}">Moje przepisy</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="{% url 'recipes:index' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Kategorie
-              </a>
-              <ul class="dropdown-menu">
-                {% for category in categories %}
-                <li><a class="dropdown-item" href="{% url 'recipes:index' %}?category={{ category.title }}">{{ category.title }}</a></li>
-                {% endfor %}
-              </ul>
-            </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'recipes:show_recipes' %}">Eksploruj</a>
             </li>

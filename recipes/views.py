@@ -7,18 +7,13 @@ from django.urls import reverse_lazy
 from django_registration.forms import User
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from recipes.models import Owner, Recipe, Comments, Category
+from recipes.models import Recipe, Comments, Category, DifficultyLevel
 from .forms import RecipeForm, CommentsForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.db.models import Q
+
 
 
 def index(request):
-    category = request.GET.get('category')
-    if category is None:
-        recipes = Recipe.objects.order_by('-publication_date')
-    else:
-        recipes = Recipe.objects.filter(category__title=category)
 
     # recipe = Recipe.objects.all()
     # if Recipe.objects.filter().exists():
@@ -31,11 +26,7 @@ def index(request):
     second_recipe = Recipe.objects.order_by('-id')[1]
     third_recipe = Recipe.objects.order_by('-id')[2]
 
-    categories = Category.objects.all()
-
     context = {
-               'recipes': recipes,
-               'categories': categories,
                'first_recipe': first_recipe,
                'second_recipe': second_recipe,
                'third_recipe': third_recipe,
@@ -49,19 +40,31 @@ def check_recipe_owner(request, recipe):
 
 
 def show_recipes(request):
-    recipes = Recipe.objects.order_by('-publication_date')
-    paginator = Paginator(recipes, 6)
+
     page_number = request.GET.get('page')
 
-    try:
-        recipes = paginator.page(page_number)
-    except PageNotAnInteger:
-        recipes = paginator.page(1)
-    except EmptyPage:
-        recipes = paginator.page(paginator.num_pages)
-
     categories = Category.objects.all()
-    context = {'recipes': recipes, 'categories': categories}
+    cat_id = request.GET.get('categories')
+
+    if cat_id and cat_id.isnumeric():
+        category = Category.objects.get(pk=cat_id)
+        print(cat_id)
+        print(category)
+        filtered_recipes = Recipe.objects.filter(category=category)
+    else:
+        filtered_recipes = Recipe.objects.all().order_by('-publication_date')
+
+    paginator = Paginator(filtered_recipes, 6)
+
+    try:
+        filtered_recipes = paginator.page(page_number)
+    except PageNotAnInteger:
+        filtered_recipes = paginator.page(1)
+    except EmptyPage:
+        filtered_recipes = paginator.page(paginator.num_pages)
+
+    context = {'filtered_recipes': filtered_recipes,
+               'categories': categories}
     return render(request, 'recipes/show_recipes.html', context)
 
 
@@ -167,3 +170,19 @@ def add_comment(request, pk):
 
     context = {'form': form}
     return render(request, 'recipes/add_comment.html', context)
+
+
+class CommentsDelete(LoginRequiredMixin, DeleteView):
+    model = Comments
+    context_object_name = 'comment'
+    success_url = reverse_lazy('recipes:show_recipes')
+
+
+def show_categories(request):
+    category = request.GET.get('category')
+    recipes = Recipe.objects.filter(category__title=category)
+    categories = Category.objects.all()
+    context = {
+               'recipes': recipes,
+               'categories': categories}
+    return render(request, 'recipes/show_categories.html', context)

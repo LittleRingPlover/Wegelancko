@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import RecipeDelete
+from .views import RecipeDelete, CommentsDelete
 
 app_name = 'recipes'
 
@@ -15,4 +15,7 @@ urlpatterns = [
     path('recipe/<int:pk>/delete-recipe/', RecipeDelete.as_view(), name='recipe-delete'),
     path('recipe/search/', views.search_recipe, name='search_recipe'),
     path('recipe/<int:pk>/add-comment/', views.add_comment, name='add_comment'),
+    path('recipe/<int:pk>/delete-comment/', CommentsDelete.as_view(), name='comment-delete'),
+    path('categories/', views.show_categories, name='show_categories'),
 ]
+

@@ -35,7 +35,7 @@ class Recipe(models.Model):
     content = models.TextField()
     publication_date = models.DateTimeField(auto_now_add=True)
     edition_date = models.DateTimeField(auto_now=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=True)
     owner = models.CharField(max_length=200)
     level = models.ForeignKey(DifficultyLevel, on_delete=models.SET_NULL, null=True)

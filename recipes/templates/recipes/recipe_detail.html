@@ -33,7 +33,10 @@
 
   {% if recipe.recipes.all %}
         {% for comment in recipe.recipes.all %}
-    <p><strong>{{ comment.user }}</strong> - <i>{{ comment.publication_date }}</i></p>
+            {% if comment.user == request.user %}
+                <a style='float:right;' class="btn btn-danger" href="{% url 'recipes:comment-delete' comment.id %}" role="button">Usuń komentarz</a>
+            {% endif %}
+            <p><strong>{{ comment.user }}</strong> - <i>{{ comment.publication_date }}</i></p>
             <p>{{ comment.content }}</p>
         {% endfor %}
   {% else %}

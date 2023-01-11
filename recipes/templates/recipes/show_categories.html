@@ -1,0 +1,16 @@
+{% extends 'recipes/base.html' %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kategorie</title>
+</head>
+<body>
+{% block page_header %}
+<div class="mt-4 p-5 bg-light text-dark rounded" style="text-align:center">
+    <div class="text-center mb-5"><h2>Wegelanckie kategorie</h2></div>
+    {% for category in categories %}
+    <a class="btn btn-lg btn-success my-1" href="{% url 'recipes:show_recipes' %}?categories={{ category.title }}" role="button">{{ category.title }}</a>
+    {% endfor %}
+</div>
+{% endblock page_header %}
